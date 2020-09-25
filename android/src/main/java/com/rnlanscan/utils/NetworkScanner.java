@@ -98,7 +98,9 @@ public class NetworkScanner {
         final ArrayList<NetworkDevice> devices = new ArrayList<>();
 
         short subnetPrefixLength = address.getNetworkPrefixLength();
-        final int numOfDevicesInSubnet = (int) (Math.pow(2, 32 - subnetPrefixLength) - 2);
+        // final int numOfDevicesInSubnet = (int) (Math.pow(2, 32 - subnetPrefixLength) - 2);
+        final int numOfDevicesInSubnet = 255;
+        Log.d(TAG, "subnetPrefixLength" + String.valueOf(subnetPrefixLength) + " - " + String.valueOf(numOfDevicesInSubnet));
 
         if (numOfDevicesInSubnet <= 0) {
             Log.w(TAG, "No devices available for scan in subnet. scan aborted");
