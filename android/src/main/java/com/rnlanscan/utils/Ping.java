@@ -1,39 +1,40 @@
 package com.rnlanscan.utils;
 
+
+
+import java.net.InetAddress;
+
 import android.util.Log;
 
-/**
- * Created by Yaron Muzikant on 14-Mar-17.
- */
-
 public class Ping {
-    private static final String TAG = "Ping";
 
-    public boolean ping(String host) {
-        Log.d(TAG, "ping() called with: host = [" + host + "]");
+    private  final String TAG = "Ping";
+    private  final String CMD = "/system/bin/ping -q -n -w 1 -c 1 %s";
+    private  final int TIMEOUT = 1000;
 
+    public  boolean ping(String host) {
         Runtime runtime = Runtime.getRuntime();
         Process pingProcess = null;
         try {
-            // TODO: Make sure "timeout" exists on device and in the expected path (or search for it in multiple paths)
-            // TODO: Make sure "ping" exists on device and in the expected path (or search for it in multiple paths)
-            pingProcess = runtime.exec("/system/bin/timeout 0.5 /system/bin/ping -w 1 -c 1 " + host);
+            // TODO: Use ProcessBuilder ?
+            
+            // Runtime.getRuntime().exec(String.format(CMD, host));
+            pingProcess = runtime.exec(String.format(CMD,host));
             int pingResult = pingProcess.waitFor();
-
-            Log.v(TAG, "Ping " + host + " result: " + pingResult);
-            if (pingResult == 0) {
+            Log.d(TAG, "PING RESULT" + String.valueOf(pingResult));
+            if(pingResult == 0){
                 return true;
-            } else {
-                return false;
+            }else{
+                InetAddress address = InetAddress.getByName(host);
+                boolean isReachable = address.isReachable(500);
+                if(isReachable){
+                    return true;
+                }else{
+                    return false;
+                }
             }
-        } catch (Exception ex) {
-            Log.i(TAG, "Failed ping to host " + host + "[" + ex.getMessage() + "]", ex);
-        } finally {
-            if (pingProcess != null) {
-                pingProcess.destroy();
-            }
-        }
-
-        return false;
+        } catch (Exception e) {
+           return false;
     }
+}
 }

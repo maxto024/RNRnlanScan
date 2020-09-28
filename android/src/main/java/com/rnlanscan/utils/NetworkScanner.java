@@ -98,8 +98,8 @@ public class NetworkScanner {
         final ArrayList<NetworkDevice> devices = new ArrayList<>();
 
         short subnetPrefixLength = address.getNetworkPrefixLength();
-        // final int numOfDevicesInSubnet = (int) (Math.pow(2, 32 - subnetPrefixLength) - 2);
-        final int numOfDevicesInSubnet = 255;
+         final int numOfDevicesInSubnet = (int) (Math.pow(2, 32 - subnetPrefixLength) - 2);
+       // final int numOfDevicesInSubnet = 255;
         Log.d(TAG, "subnetPrefixLength" + String.valueOf(subnetPrefixLength) + " - " + String.valueOf(numOfDevicesInSubnet));
 
         if (numOfDevicesInSubnet <= 0) {
@@ -142,7 +142,7 @@ public class NetworkScanner {
 
             int nextIP = buildIPFromParts(currIPParts);
             String nextIPDisplay = getIpAddress(nextIP);
-
+                
             if ((nextIP & mask) == maskedIP) {
                 scanIP(nextIPDisplay, threadsManager, pingCounter, devices, onScanEventListener);
             } else {
