@@ -204,14 +204,14 @@ public class NetworkScanner {
             @Override
             public void run() {
                 boolean isAvailable = pinger.ping(ip);
-
+              
                 if (isAvailable) {
                     NetworkDevice networkDevice = new NetworkDevice(ip);
 
                     String hostname = hostNameResolver.resolve(ip);
                     networkDevice.setHostname(hostname);
 
-                    // Run port scan for device
+                    // // Run port scan for device
                     ArrayList<Integer> openPorts = portScanner.scanPorts(ip, COMMON_PORTS);
                     if (openPorts != null && openPorts.size() > 0) {
                         networkDevice.setOpenPorts(openPorts);
@@ -242,7 +242,7 @@ public class NetworkScanner {
                             }
                         
                     }
-
+                    
                     devices.add(networkDevice);
 
                     onScanEventListener.onDeviceFound(networkDevice);
